@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход — NOIR Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for cat, msg in messages %}
+        <div class="flash flash-{{ cat }}">{{ msg }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+<div class="admin-login">
+  <div class="login-card">
+    <div class="login-logo">Oxeone</div>
+    <div class="login-sub">Панель управления</div>
+    <form method="POST">
+      <div class="form-group">
+        <label class="form-label">Логин</label>
+        <input type="text" name="username" class="form-input" placeholder="admin" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Пароль</label>
+        <input type="password" name="password" class="form-input" placeholder="••••••••" required>
+      </div>
+      <div style="margin-top:2rem;">
+        <button type="submit" class="btn btn-gold">Войти</button>
+      </div>
+    </form>
+    <div style="text-align:center;margin-top:1.5rem;font-size:0.72rem;color:var(--grey);">
+      <a href="{{ url_for('index') }}" style="color:var(--grey);">← Вернуться на сайт</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

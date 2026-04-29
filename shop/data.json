@@ -1,0 +1,69 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Кожаная куртка",
+      "price": 12990,
+      "category": "Верхняя одежда",
+      "description": "Классическая кожаная куртка из натуральной кожи. Идеально подходит для любого сезона.",
+      "image": "jacket.jpg",
+      "stock": 15,
+      "featured": true
+    },
+    {
+      "id": "2",
+      "name": "Джинсы Slim Fit",
+      "price": 4990,
+      "category": "Брюки",
+      "description": "Современные джинсы прямого кроя с высоким содержанием хлопка.",
+      "image": "jeans.jpg",
+      "stock": 30,
+      "featured": true
+    },
+    {
+      "id": "3",
+      "name": "Белая рубашка",
+      "price": 2990,
+      "category": "Рубашки",
+      "description": "Классическая белая рубашка из 100% хлопка. Подходит как для офиса, так и для casual.",
+      "image": "shirt.jpg",
+      "stock": 25,
+      "featured": false
+    },
+    {
+      "id": "4",
+      "name": "Кроссовки Urban",
+      "price": 7990,
+      "category": "Обувь",
+      "description": "Стильные городские кроссовки с амортизирующей подошвой.",
+      "image": "sneakers.jpg",
+      "stock": 20,
+      "featured": true
+    },
+    {
+      "id": "5",
+      "name": "Шерстяной свитер",
+      "price": 5490,
+      "category": "Свитеры",
+      "description": "Мягкий свитер из мериносовой шерсти. Идеально для холодной погоды.",
+      "image": "sweater.jpg",
+      "stock": 18,
+      "featured": false
+    },
+    {
+      "id": "6",
+      "name": "Шёлковый шарф",
+      "price": 1990,
+      "category": "Аксессуары",
+      "description": "Элегантный шёлковый шарф с уникальным принтом.",
+      "image": "scarf.jpg",
+      "stock": 40,
+      "featured": true
+    }
+  ],
+  "orders": [],
+  "admin": {
+    "username": "admin",
+    "password": "admin123"
+  }
+}

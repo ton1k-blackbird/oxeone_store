@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Oxeone — Одежда{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="{{ url_for('index') }}" class="logo">Oxeone</a>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('index') }}">Главная</a></li>
+      <li><a href="{{ url_for('shop') }}">Каталог</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="currency-switcher">
+        {% for code, cur in currencies.items() %}
+          <a href="{{ url_for('set_currency', code=code) }}" class="cur-btn {% if current_currency == code %}active{% endif %}" title="{{ cur.name }}">{{ code }}</a>
+        {% endfor %}
+      </div>
+      <a href="{{ url_for('cart') }}" class="cart-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        {% if session.cart %}
+          <span class="cart-badge">{{ session.cart.values()|sum }}</span>
+        {% endif %}
+      </a>
+    </div>
+  </div>
+</nav>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for cat, msg in messages %}
+        <div class="flash flash-{{ cat }}">{{ msg }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<main>{% block content %}{% endblock %}</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo">Oxeone</span>
+      <p>Изысканная одежда для современных людей</p>
+      <div class="footer-currencies">
+        {% for code, cur in currencies.items() %}
+          <a href="{{ url_for('set_currency', code=code) }}" class="cur-btn {% if current_currency == code %}active{% endif %}">{{ code }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="{{ url_for('shop') }}">Каталог</a>
+      <a href="{{ url_for('admin_login') }}">Панель администратора</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 Oxeone. Все права защищены.</div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

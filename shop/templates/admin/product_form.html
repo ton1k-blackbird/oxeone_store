@@ -1,0 +1,48 @@
+{% extends "admin/base.html" %}
+{% block title %}{% if product %}Редактировать{% else %}Добавить{% endif %} товар — NOIR{% endblock %}
+{% block page_title %}{% if product %}Редактировать товар{% else %}Новый товар{% endif %}{% endblock %}
+{% block content %}
+<a href="{{ url_for('admin_products') }}" class="back-link">← Назад к товарам</a>
+<div class="admin-form">
+  <form method="POST">
+    <div class="form-group">
+      <label class="form-label">Название</label>
+      <input type="text" name="name" class="form-input" required value="{{ product.name if product else '' }}" placeholder="Название товара">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Цена (₽)</label>
+        <input type="number" name="price" class="form-input" required value="{{ product.price if product else '' }}" placeholder="5990">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Количество</label>
+        <input type="number" name="stock" class="form-input" required value="{{ product.stock if product else '' }}" placeholder="10">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Категория</label>
+      <input type="text" name="category" class="form-input" required value="{{ product.category if product else '' }}" placeholder="Верхняя одежда, Обувь, Аксессуары...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Описание</label>
+      <textarea name="description" class="form-input" required placeholder="Описание товара...">{{ product.description if product else '' }}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Файл изображения</label>
+      <input type="text" name="image" class="form-input" value="{{ product.image if product else '' }}" placeholder="photo.jpg">
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+        <input type="checkbox" name="featured" id="featured" {% if product and product.featured %}checked{% endif %}>
+        <label for="featured" style="font-size:0.8rem;cursor:pointer;color:var(--text);">Хит продаж (отображать на главной)</label>
+      </div>
+    </div>
+    <div style="display:flex;gap:1rem;margin-top:2rem;">
+      <button type="submit" class="btn btn-gold" style="width:auto;padding:0.8rem 2.5rem;">
+        {% if product %}Сохранить изменения{% else %}Добавить товар{% endif %}
+      </button>
+      <a href="{{ url_for('admin_products') }}" class="btn btn-outline">Отмена</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

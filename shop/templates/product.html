@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} — Oxeone{% endblock %}
+{% block content %}
+<div class="product-detail">
+  <div class="detail-img">{{ product.name[0] }}</div>
+  <div class="detail-info">
+    <div class="product-category" style="font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">{{ product.category }}</div>
+    <h1 style="font-size:clamp(2rem,4vw,3rem);margin-bottom:0;">{{ product.name }}</h1>
+    <div class="detail-price">{{ format_price(product.price) }}</div>
+    <p class="detail-desc">{{ product.description }}</p>
+    <div class="stock-badge" style="margin-bottom:2rem;display:inline-block;">В наличии: {{ product.stock }} шт.</div>
+    <form action="{{ url_for('add_to_cart', pid=product.id) }}" method="POST">
+      <div class="qty-row">
+        <label style="font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">Кол-во</label>
+        <input type="number" name="qty" value="1" min="1" max="{{ product.stock }}" class="qty-input">
+      </div>
+      <button type="submit" class="btn btn-gold" style="width:100%;margin-bottom:1rem;">Добавить в корзину</button>
+    </form>
+    <a href="{{ url_for('shop') }}" style="font-size:0.72rem;letter-spacing:0.1em;color:var(--grey);display:inline-flex;align-items:center;gap:0.5rem;">← Вернуться в каталог</a>
+  </div>
+</div>
+{% endblock %}

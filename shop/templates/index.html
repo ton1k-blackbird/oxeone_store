@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Oxeone — Изысканная одежда{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Новая коллекция 2025</div>
+    <h1>Стиль — это<br><em>молчаливый</em><br>язык</h1>
+    <p class="hero-desc">Откройте для себя изысканную одежду, созданную для тех, кто ценит качество и безупречный вкус.</p>
+    <div class="hero-btns">
+      <a href="{{ url_for('shop') }}" class="btn btn-gold">Смотреть коллекцию</a>
+      <a href="#featured" class="btn btn-outline">Хиты продаж</a>
+    </div>
+  </div>
+</section>
+<div class="ornament">✦ ✦ ✦</div>
+<section id="featured">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-label">Избранное</div>
+      <h2>Хиты сезона</h2>
+    </div>
+    <div class="product-grid">
+      {% for p in featured %}
+      <article class="product-card" onclick="location.href='{{ url_for('product', pid=p.id) }}'">
+        <div class="featured-badge">Хит</div>
+        <div class="product-img-wrap">
+          <div class="product-img-placeholder">{{ p.name[0] }}</div>
+          <div class="card-overlay"><span class="btn btn-gold btn-sm">Подробнее</span></div>
+        </div>
+        <div class="product-info">
+          <div class="product-category">{{ p.category }}</div>
+          <div class="product-name">{{ p.name }}</div>
+          <div class="product-price">{{ format_price(p.price) }}</div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    <div style="text-align:center;margin-top:3rem;">
+      <a href="{{ url_for('shop') }}" class="btn btn-outline">Весь каталог</a>
+    </div>
+  </div>
+</section>
+<section style="background:linear-gradient(135deg,var(--bg2),var(--bg3));border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 3rem;text-align:center;">
+  <div style="max-width:600px;margin:0 auto;">
+    <div class="section-label" style="justify-content:center;">Наша философия</div>
+    <h2 style="margin-bottom:1.5rem;">Качество без<br><em style="color:var(--gold);">компромиссов</em></h2>
+    <p style="color:var(--grey);line-height:1.9;margin-bottom:2rem;">Каждый предмет одежды создаётся с вниманием к деталям и уважением к традиционному портновскому мастерству.</p>
+    <a href="{{ url_for('shop') }}" class="btn btn-gold">Начать выбирать</a>
+  </div>
+</section>
+{% endblock %}

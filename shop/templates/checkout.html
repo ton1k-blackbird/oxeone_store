@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Оформление заказа — Oxeone{% endblock %}
+{% block content %}
+<div class="checkout-page">
+  <div class="section-label" style="margin-bottom:1rem;">Последний шаг</div>
+  <h1 style="font-size:clamp(2rem,4vw,3rem);margin-bottom:3rem;">Оформление заказа</h1>
+
+  <div class="order-summary">
+    <h3>Итого к оплате</h3>
+    <div style="font-family:var(--font-serif);font-size:2.5rem;color:var(--gold);">{{ format_price(total_rub) }}</div>
+    <div style="font-size:0.72rem;color:var(--grey);margin-top:0.5rem;">Валюта: {{ currency_name }}</div>
+  </div>
+
+  <!-- СПОСОБЫ ОПЛАТЫ -->
+  <div style="margin-bottom:2rem;">
+    <div class="section-label" style="margin-bottom:1rem;">Способ оплаты</div>
+    {% for method in payment_methods %}
+    <label class="payment-option">
+      <input type="radio" name="payment_select" value="{{ method.name }}" {% if loop.first %}checked{% endif %}>
+      <div class="payment-card">
+        <span class="payment-icon">{{ method.icon }}</span>
+        <div>
+          <div style="color:var(--white);font-size:0.9rem;">{{ method.name }}</div>
+          <div style="color:var(--grey);font-size:0.75rem;margin-top:0.2rem;">{{ method.detail }}</div>
+        </div>
+      </div>
+    </label>
+    {% endfor %}
+  </div>
+
+  <form action="{{ url_for('checkout') }}" method="POST">
+    <input type="hidden" name="payment" id="payment_hidden" value="{{ payment_methods[0].name }}">
+    <div class="form-group">
+      <label class="form-label">Имя и фамилия</label>
+      <input type="text" name="name" required class="form-input" placeholder="Иван Иванов">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" name="email" required class="form-input" placeholder="ivan@example.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Телефон</label>
+      <input type="tel" name="phone" required class="form-input" placeholder="+373 / +380 / +375">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Адрес доставки</label>
+      <input type="text" name="address" required class="form-input" placeholder="Город, улица, дом, квартира">
+    </div>
+    <button type="submit" class="btn btn-gold" style="width:100%;margin-top:1rem;">Подтвердить заказ</button>
+  </form>
+</div>
+<script>
+document.querySelectorAll('input[name="payment_select"]').forEach(r => {
+  r.addEventListener('change', () => {
+    document.getElementById('payment_hidden').value = r.value;
+  });
+});
+</script>
+{% endblock %}

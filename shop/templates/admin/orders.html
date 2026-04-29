@@ -1,0 +1,49 @@
+{% extends "admin/base.html" %}
+{% block title %}Заказы — NOIR Admin{% endblock %}
+{% block page_title %}Управление заказами{% endblock %}
+{% block content %}
+<div class="table-wrap">
+  <div class="table-header">
+    <h3>Все заказы ({{ orders|length }})</h3>
+  </div>
+  {% if orders %}
+  <table>
+    <thead><tr>
+      <th>#</th><th>Клиент</th><th>Телефон</th><th>Адрес</th><th>Сумма</th><th>Дата</th><th>Статус</th><th>Изменить</th>
+    </tr></thead>
+    <tbody>
+      {% for order in orders|reverse %}
+      <tr>
+        <td style="color:var(--gold);font-family:var(--font-serif);font-size:1rem;">{{ order.id }}</td>
+        <td style="color:var(--white);">{{ order.name }}<br><span style="font-size:0.75rem;color:var(--grey);">{{ order.email }}</span></td>
+        <td style="color:var(--grey);font-size:0.82rem;">{{ order.phone }}</td>
+        <td style="color:var(--grey);font-size:0.8rem;max-width:180px;">{{ order.address }}</td>
+        <td style="color:var(--gold);">{{ "{:,}".format(order.total).replace(",", " ") }} ₽</td>
+        <td style="color:var(--grey);font-size:0.8rem;">{{ order.date }}</td>
+        <td>
+          {% set s = order.status %}
+          <span class="badge badge-{% if s=='Новый' %}new{% elif s=='В обработке' %}processing{% elif s=='Отправлен' %}shipped{% else %}done{% endif %}">{{ s }}</span>
+        </td>
+        <td>
+          <form method="POST" action="{{ url_for('admin_order_status', oid=order.id) }}" style="display:flex;gap:0.4rem;align-items:center;">
+            <select name="status" class="form-input" style="padding:0.4rem 0.6rem;font-size:0.78rem;width:auto;">
+              <option {% if order.status=='Новый' %}selected{% endif %}>Новый</option>
+              <option {% if order.status=='В обработке' %}selected{% endif %}>В обработке</option>
+              <option {% if order.status=='Отправлен' %}selected{% endif %}>Отправлен</option>
+              <option {% if order.status=='Выполнен' %}selected{% endif %}>Выполнен</option>
+            </select>
+            <button type="submit" class="btn btn-outline btn-sm">OK</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div style="padding:4rem;text-align:center;color:var(--grey);">
+    <div style="font-family:var(--font-serif);font-size:3rem;margin-bottom:1rem;opacity:0.2;">✦</div>
+    Заказов пока нет
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Каталог — Oxeone{% endblock %}
+{% block content %}
+<div class="shop-header">
+  <div class="shop-inner">
+    <div class="section-label">Коллекция</div>
+    <h1 style="font-size:clamp(2rem,5vw,4rem);">Каталог</h1>
+    <div class="filter-bar">
+      <a href="{{ url_for('shop') }}" class="filter-chip {% if not selected %}active{% endif %}">Все</a>
+      {% for cat in categories %}
+      <a href="{{ url_for('shop', category=cat) }}" class="filter-chip {% if selected==cat %}active{% endif %}">{{ cat }}</a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<div class="shop-content">
+  {% if products %}
+  <div class="product-grid">
+    {% for p in products %}
+    <article class="product-card" onclick="location.href='{{ url_for('product', pid=p.id) }}'">
+      {% if p.featured %}<div class="featured-badge">Хит</div>{% endif %}
+      <div class="product-img-wrap">
+        <div class="product-img-placeholder">{{ p.name[0] }}</div>
+        <div class="card-overlay"><span class="btn btn-gold btn-sm">Подробнее</span></div>
+      </div>
+      <div class="product-info">
+        <div class="product-category">{{ p.category }}</div>
+        <div class="product-name">{{ p.name }}</div>
+        <div class="product-price">{{ format_price(p.price) }}</div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state"><h2>Товары не найдены</h2><p>Попробуйте другую категорию</p></div>
+  {% endif %}
+</div>
+{% endblock %}
